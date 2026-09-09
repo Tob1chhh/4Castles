@@ -1,4 +1,4 @@
-
+// Test Card
 export function PlayerCard() {
   return (
     <div className="card-magic p-6 max-w-xs mx-auto">
