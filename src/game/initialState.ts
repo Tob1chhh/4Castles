@@ -2,8 +2,8 @@ import { CASTLES } from './castles';
 import { createBoard } from './board';
 import type { CastleID, GameState, Player } from './types';
 
-export function initialState(): GameState {
-  const castleID: CastleID = 'red-castle'; // для прототипа
+export const initialState = (): GameState => {
+  const castleID: CastleID = 'redCastle'; // для прототипа
   const cls = CASTLES[castleID];
 
   const player: Player = {
@@ -33,5 +33,6 @@ export function initialState(): GameState {
     turn: 1,
     phase: 'roll',
     log: ['Игра началась. Бросьте кубик.'],
+    currentPlayerSteps: null,
   };
 }
