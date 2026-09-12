@@ -9,12 +9,13 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
   switch (action.type) {
     case 'ROLL_DICE': {
       const dice = Math.floor(Math.random() * 6) + 1;
-      state.log.push(`Вы бросили кубик на "${dice}" ходов.`);
+      state.log.push(`\nВы бросили кубик. Выпало "${dice}".`);
 
       return {
         ...state,
         phase: 'move',
         log: [...state.log],
+        currentPlayerSteps: dice,
       };
     }
 
@@ -25,7 +26,7 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
       currentPlayer.position = newPosition;
 
       const cell = state.board[newPosition];
-      let message = `Вы переместились на клетку "${newPosition}" (Тип клетки: ${cellTypeRu[cell.type]})`;
+      let message = `Вы переместились на клетку "${newPosition}" (Тип клетки: ${cellTypeRu[cell.type]}) \n`;
 
       /** Ловушка */
       if (cell.type === 'trap') {
@@ -34,7 +35,7 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
         message += `! Ловушка! Получено ${damage} урона. Текущее HP: ${currentPlayer.hp}`;
         if (currentPlayer.hp === 0) {
           currentPlayer.isAlive = false;
-          message += ' — Вы погибли!';
+          message += '\n — Вы погибли!';
         }
       /** Сокровище */
       } else if (cell.type === 'treasure') {
@@ -46,11 +47,11 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
         const playerLuck = Math.floor(Math.random() * 10) + 1;
 
         if (playerLuck > 5) {
-          message += '! Сегодня тебе сулит удача!';
+          message += '! Сегодня тебе сулит удача!\n';
           message += '! Вы нашли сокровище! +5 HP.';
           currentPlayer.hp = Math.min(currentPlayer.maxHp, currentPlayer.hp + 5);
         } else {
-          message += '! Ты попал в Запретный лес. Неудача.'; 
+          message += '! Ты попал в Запретный лес. Неудача.\n'; 
           message += '! Впереди Враг! Бой начнётся на следующем ходу.';
         }
       /** Улучшение */
@@ -84,6 +85,7 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
         phase: 'roll',
         log: [...state.log],
         players: [...players],
+        currentPlayerSteps: null,
       };
     }
 

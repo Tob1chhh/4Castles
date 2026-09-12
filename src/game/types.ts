@@ -1,5 +1,5 @@
 /** Идентификаторы башен */
-export type CastleID = 'red-castle' | 'green-castle' | 'blue-castle' | 'yellow-castle';
+export type CastleID = 'redCastle' | 'greenCastle' | 'blueCastle' | 'yellowCastle';
 export type MagicElementsID = 'fire' | 'ground' | 'darkness' | 'water' | 'wind' | 'light' | 'electro' | 'frost';
 export type PassiveAbilityID = 
   | 'rage'             // Ярость: +2 к атаке и +5 к защите при HP ниже 50%
@@ -56,8 +56,20 @@ export interface GameState {
   turn: number;
   phase: 'roll' | 'move' | 'action' | 'end';
   log: string[];
+  currentPlayerSteps: number | null; 
 }
 
 export type GameAction =
   | { type: 'ROLL_DICE' }
   | { type: 'MOVE_PLAYER'; steps: number };
+
+export interface GameStore {
+  state: GameState;
+  rollDice: () => void;
+  movePlayer: (steps: number) => void;
+  resetGame: () => void;
+}
+
+export interface GameControlsProps {
+  isVisible?: boolean;
+}

@@ -1,11 +1,7 @@
-import { PlayerCard } from './components/PlayerCard';
+import { GameScreen } from './pages/GameScreen';
 
 function App() {
-  return (
-    <>
-      <PlayerCard />
-    </>
-  )
+  return <GameScreen />;
 }
 
-export default App
+export default App;
